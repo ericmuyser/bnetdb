@@ -1,0 +1,1200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<title>Diablo 2 Game Database</title>
+		<meta name="robots" content="index,follow" />
+		
+		<meta name="description" content="Browse a database of past and present Diablo 2 games easier than in-game." />
+		<meta name="keywords" content="battle.net, game list, diablo, d2, bnet" />
+
+		<link rel="shortcut icon" href="favicon.ico" />
+
+		<link rel="stylesheet" type="text/css" href="chat/css/style.css" />
+		<link rel="stylesheet" href="chat/example/css/dark.yshout.css" />
+		
+		<link type="text/css" rel="stylesheet" href="css/main.css" media="screen" />
+		<style type="text/css">
+			*
+			{
+				margin: 0pt;
+				padding: 0pt;
+				cursor: inherit;
+			}
+			
+			html
+			{
+				width: 100%;
+				height: 100%;
+			}
+			
+			body
+			{
+				height: 100%;
+				width: 100%;
+				background-color: #000;
+				color: #FFF;
+			}
+			
+			body, table
+			{
+				font-family: Cambria Bold, Verdana, Arial, Helvetica, sans-serif;
+				font-size: 62.5%;
+				font-style: normal;
+				font-variant: normal;
+				font-weight: normal;
+				font-size-adjust: none;
+				text-align: left;
+			}
+			
+			body, input, table
+			{
+				cursor: url("/images/cursor.ani"), url("images/cursor.cur"), url("images/cursor.gif"), pointer;
+			}
+			
+			table, input
+			{
+				font-size: 1.3em;
+			}
+			
+			input, table
+			{
+				border: 0pt;
+			}
+			
+			#search .box
+			{
+				position: absolute;
+				top: 4px;
+				left: 2px;
+				width: 101px;
+				padding:2px;
+				color: #9c8d59;
+			}
+			
+			a
+			{
+				text-decoration: none;
+			}
+			
+			a:hover
+			{
+				text-decoration: none;
+			}
+			
+			#wrapper
+			{
+				padding:10px;
+			}
+			
+			#lists
+			{
+				
+			}
+			
+			.handle
+			{
+				cursor: url("/images/cursor-move.ani"), url("images/cursor-move.cur"), url("images/cursor-move.gif"), move;
+			}
+			
+			#lists table
+			{
+				width: 100%;
+				*width: 90%; /* IE6/IE7 */
+				
+			}
+			
+			#lists td, #lists th
+			{
+				color: #9c8d59;
+				padding: 0px 5px 0px 5px;
+				_font-weight: bold; /* IE6 */
+			}
+			
+			#lists td.active, #lists th
+			{
+				background-color: #404040;
+			}
+			
+			#lists td.active .game-title, #lists th
+			{
+				color: #FFF;
+			}
+			
+			#lists td .game-title, #lists th
+			{
+				color: #9c8d59;
+			}
+			
+			.box, .button
+			{
+				background-color: transparent;
+			}
+			
+			.box
+			{
+				cursor: url("/images/cursor-text.ani"), url("images/cursor-text.cur"), url("images/cursor-text.gif"), text;
+				font-family: Cambria Bold, Verdana, Arial, Helvetica, sans-serif;
+				_font-weight: bold; /* IE6 */
+			}
+			
+			#realms
+			{
+				background: transparent url("images/realms.gif") no-repeat 0% 0%;
+			}
+			
+			#realms.active
+			{
+				background-image: url("images/realms-active.gif");
+			}
+			
+			
+			#realms-list .option
+			{
+				padding: 3px 0pt 3px 10px;
+				font-size: 1.2em;
+				_font-weight: bold; /* IE6 */
+			}
+			
+			#realms-list .option.active
+			{
+				background-color: #404040;
+			}
+			
+			.game-players
+			{
+				font-size: 0.9em;
+			}
+			
+			.clear
+			{
+				clear:both;
+			}
+			
+			div.game-details div.title
+			{
+				color: #FFF;
+			}
+			
+			div.game-details div.title div.handle
+			{
+				font-family: Cambria Bold, Verdana, Arial, Helvetica, sans-serif;
+				_font-weight: bold; /* IE6 */
+				font-size: 1.3em;
+			}
+			
+			div.game-details div.title input.box
+			{
+				color: #FFF;
+			}
+			
+			div.game-details div.description
+			{
+				color: #FFF;
+				font-size: 1.2em;
+				padding: 5px;
+			}
+			
+			#background
+			{
+				position: absolute;
+				left:0px;
+				top:0px;
+			}
+			
+			#error
+			{
+				font-size: 1.3em;
+				color: #FFF;
+			}
+			
+			#content
+			{
+				font-family: Cambria Bold, Verdana, Arial, Helvetica, sans-serif;
+				font-size: 1.2em;
+				color: #FFF;
+			}
+			
+			#content a
+			{
+				color:#948064;
+			}
+			
+			#content .title
+			{
+				font-size: 1.4em;
+			}
+			
+			.color1
+			{
+				color: #948064;
+			}
+			
+			.bold
+			{
+				font-weight: bold;
+			}
+		</style>
+		<script type="text/javascript" src="js/jquery-1.2.6.min.js"></script>
+		<script type="text/javascript" src="js/jquery-ui-personalized-1.6rc1.min.js"></script>
+
+		<script type="text/javascript">
+function copyToClipBoard(dataVal)
+{
+	if($.browser.msie)
+	{
+		linkCopy = dataVal.createTextRange();
+		linkCopy.execCommand("RemoveFormat");
+		linkCopy.execCommand("Copy");
+	}
+	else
+	{
+		dataVal.focus();
+		dataVal.select();
+		var copyText = dataVal.value;
+		if (window.clipboardData)
+		{ // IE send-to-clipboard method.
+			window.clipboardData.setData('Text', copyText);
+		}
+		else if (window.netscape)
+		{
+			// You have to sign the code to enable this or allow the action in about:config by changing user_pref("signed.applets.codebase_principal_support", true);
+			netscape.security.PrivilegeManager.enablePrivilege('UniversalXPConnect');
+	
+			// Store support string in an object.
+			var str = Components.classes["@mozilla.org/supports-string;1"].createInstance(Components.interfaces.nsISupportsString);
+			if (!str)
+				return false;
+			str.data=copyText;
+	
+			// Make transferable.
+			var trans = Components.classes["@mozilla.org/widget/transferable;1"].createInstance(Components.interfaces.nsITransferable);
+			if (!trans)
+				return false;
+	
+			// Specify what datatypes we want to obtain, which is text in this case.
+			trans.addDataFlavor("text/unicode");
+			trans.setTransferData("text/unicode",str,copyText.length*2);
+			  
+			var clipid=Components.interfaces.nsIClipboard;
+			var clip = Components.classes["@mozilla.org/widget/clipboard;1"].getService(clipid);
+			if (!clip)
+				return false;
+			  
+			clip.setData(trans,null,clipid.kGlobalClipboard);
+		 }
+	 }
+	 
+}
+
+function selectLink()
+{
+	var dataVal = document.getElementById("link_preview");
+	dataVal.focus();
+	dataVal.select();
+}
+		
+			jQuery(document).ready(function($)
+			{
+				$("#background").css("opacity", 0);
+				
+				$(window).load(function()
+				{
+					$("#background").css("background", "transparent url(images/bg2.jpg) no-repeat 50% 0%");
+					
+					setTimeout(function()
+					{
+						$("#background").animate({opacity: 1}, 5000);
+					}, 1000);
+				});
+				
+				var typeID = 2;
+				var realmID = 1;
+				var gameExpansion = 2;
+				var gameLadder = 1;
+				var gameHardcore = 0;
+				var gameDifficulty = 1;
+				
+				var modules = [];
+				
+				modules.push($("#search"));
+				modules.push($("#lists"));
+				modules.push($("#realms"));
+				
+				var lists = [];
+				lists.push($("#public-games")[0]);
+				lists.push($("#search-filter")[0]);
+				lists.push($("#search-results")[0]);
+				lists.push($("#options")[0]);
+				
+				$("#blocker").css("opacity", 0.75);
+				
+				var resyncMessageBox = function()
+				{
+					$("#error").css({top: $(window).height() / 2 - $("#error").height() / 2, left: $(window).width() / 2 - $("#error").width() / 2});
+				};
+				
+				var initModules = function()
+				{
+					
+					$("#realms").show();
+					$("#search").css({top: 0, left: $(window).width() - $("#search").width() - 20}).show();
+					$("#lists").css({top: $("#search").height() + 5, left: $(window).width() - $("#search").width() - 20}).show();
+					resyncMessageBox();
+					
+					$("#chat").css({top: 0, left: 182 + 10 + 10, width: $(window).width() - 182 - 182 - 20 - 20 - 20})
+				};
+				
+				$("#background").css({width:"100%", height:"100%"});
+				
+				$("#search .box").focus();
+				
+				$(window).resize(function()
+				{
+					initModules();
+				});
+				
+				var activeGame = null;
+				
+				var clickSelect = function()
+				{
+					this.onselectstart = function() { return false };
+					
+					return false;
+				};
+				
+				var updateLinks = function(loc)
+				{
+					if(loc === undefined)
+						loc = $("body");
+					
+					loc.find("a")
+					.bind("mousedown", clickSelect)
+					.css({cursor: "url(/images/cursor.ani), url(/images/cursor.cur), url(/images/cursor.gif), pointer;"});
+				};
+				
+				updateLinks();
+				
+				$("#lists").draggable(
+				{ 
+					handle: "div.handle",
+					containment: "body",
+					drag: function(e, ui)
+					{
+						//$("#gamelist").draggable("disable");
+						
+					}
+				});
+				
+				$("#lists .dropdown").bind("click", function()
+				{
+					$(this).siblings(".dropdown-menu").toggle();
+				});
+				
+				$("#realms").draggable(
+				{ 
+					handle: "div.handle",
+					containment: "body",
+					drag: function(e, ui)
+					{
+						//$("#gamelist").draggable("disable");
+						
+					}
+				});
+				
+				gameListingTemplate = "<tr><td class=''><span class='game-title' style='float:left'></span><span class='game-players' style='float:right'></span><div class='clear'></div></td></tr>";
+				gameDetailsTemplate = " \
+		<div class='gameDetails' style='width: 182px; height: 205px; position: relative; background: transparent url(images/gamelist.gif) no-repeat 0% 0%'> \
+			<div class='drag-handle' style='position: absolute; top: 2px; left: 2px; width: 178px; height: 19px;'> \
+				 \
+			</div> \
+			<div style='position: absolute; top: 23px; left: 2px; width: 178px; height: 166px; overflow: auto;padding: 7px 0pt 7px 0pt'> \
+				 \
+			</div> \
+			<span class='game-description'></span> \
+		</div>";
+				
+				var preloadImages = function()
+				{
+					for(var i in arguments.length)
+						if(arguments[i].type === "array")
+							for(var j in arguments[i])
+								(new Image()).src = arguments[i][j];
+						else
+							(new Image()).src = arguments[i];
+				};
+				
+				
+				$(window).load(function()
+				{
+					preloadImages(
+						"images/dropdown-menu.gif",
+						"images/menu-search.gif",
+						"images/menu-results.gif",
+						"images/menu-options.gif",
+						"images/game-details.gif",
+						"images/button-classic.gif",
+						"images/button-softcore.gif",
+						"images/button-nonladder.gif",
+						"images/button-nightmare.gif",
+						"images/button-normal.gif"
+					);
+				});
+				
+				var updatedSince = 2 * 60;
+				
+				$("#public-games")[0].list = {};
+				
+				$("#search-results")[0].list = {};
+				var activeList = $("#public-games");
+				var lastSearch = '';
+				
+				var update = function(list, key)
+				{
+					activeList = list;
+					
+					var data =
+					{
+						search: key,
+						updated_since: updatedSince,
+						type_id: typeID,
+						realm_id: realmID,
+						game_expansion: gameExpansion,
+						game_ladder: gameLadder,
+						game_hardcore: gameHardcore,
+						game_difficulty: gameDifficulty
+					};
+					
+					$.post("gamelist.php", data, function(json)
+					{
+						if(json.error)
+						{
+							
+							$("#error").html(json.error);
+							resyncMessageBox();
+							$("#error").show();
+							//$("#blocker").show();
+						}
+						else
+						{
+							var colors = [];
+							colors[0] = "#0006ff";
+							colors[1] = "#84ff00";
+							colors[2] = "#a2ff00";
+							colors[3] = "#d2ff00";
+							colors[4] = "#f0ff00";
+							colors[5] = "#ffc000";
+							colors[6] = "#FF9000";
+							colors[7] = "#FF3600";
+							colors[8] = "#FF0000";
+							
+							if(json.games.length === 0)
+							{
+								list.find(".message").html(json.message).show();
+
+								//resetList(activeList);
+								//if($("table > tbody .no-games", list).size())
+									
+								//else
+									//list.find("table > tbody").prepend("<tr class='no-games'><td style='font-size: 0.9em'>NO NEW GAMES FOUND...</td></tr>");
+							}
+							else
+							{
+								list.find(".message").hide();
+
+							$.each(json.games, function()
+							{
+								var self = this;
+								
+								//setTimeout(function()
+								//{
+								if(self['game_title'])
+								{
+									if(list[0].list[self['game_id']])
+									{
+										dom = list[0].list[self['game_id']];
+										
+										dom.prependTo(list.find("table > tbody"));
+									}
+									else
+									{
+										var gameListing = $(gameListingTemplate);
+										
+										gameListing.find("td")
+										.attr("class", "id" + self['game_id'])
+										.css({opacity: 1.0 - self['game_players'] * 0.1})
+										.bind("click", function()
+										{
+											if(activeGame)
+												activeGame.removeClass("active");
+											
+											activeGame = $(this)
+											
+											activeGame.toggleClass("active");
+											
+											//var gameDetails = $(gameDetailsTemplate);
+											var gameDetails = $("#template_game-details").clone().attr({id: ''});
+											
+											gameDetails.draggable(
+											{
+												handle: "div.title > div.handle",
+												containment: "body"
+											});
+											
+											$("div.title > div.handle", gameDetails)
+											.html(self['game_title'])
+											.bind("dblclick", function()
+											{
+												$(this).hide().siblings("input.box").val($(this).html()).show().focus().select();
+											});
+											
+											$("div.title > input.box", gameDetails)
+											.bind("blur", function()
+											{
+												$(this).hide().siblings("div.handle").html($(this).val()).show();
+											})
+											.bind("keyup", function(e)
+											{
+												if(e.keyCode === 13)
+													$(this).blur();
+											});
+											
+											
+											$("div.close", gameDetails)
+											.bind("click", function()
+											{
+												$(this).parents("div.game-details").remove();
+											});
+											
+											$("div.hide", gameDetails)
+											.bind("click", function()
+											{
+												if(this.hidden)
+												{
+													this.hidden = false;
+													$(this).parents("div.game-details").css({height: "83px", width: "504px"});
+												}
+												else
+												{
+													this.hidden = true;
+													$(this).parents("div.game-details").css({height: "26px", width: "343px"});
+												}
+												
+											})[0].hidden = false;
+											
+											$("div.copy", gameDetails)
+											.bind("click", function()
+											{
+												$("div.title > div.handle", gameDetails).trigger("dblclick");
+												
+												copyToClipBoard($("div.title > input.box", gameDetails)[0]);
+											});
+											
+											
+											
+											$("div.description", gameDetails).html(self['game_description']);
+											
+											gameDetails.appendTo("body").show();
+										})
+										.bind("mousedown", clickSelect);
+										
+										gameListing.find("span.game-title")
+										.html(self['game_title']);
+										
+										
+										//<input class="game-title box" type="text" size="40" maxlength="25" style='position: absolute; top: 4px; left: 2px; width: 153px; padding:2px;color:#FFF' />
+	
+										gameListing.find("span.game-players")
+										.html(self['game_players'])
+										.css({color: colors[self['game_players']]})
+										.css({opacity: 0.5});
+										
+										gameListing.prependTo(list.find("table > tbody"));
+										
+										list[0].list[self['game_id']] = gameListing;
+										
+									}
+								//}, timeout += 0);
+								}
+							});
+							}
+							
+							//list[0].list.splice(100, list[0].list.length-1);
+							
+							var rows = $("tbody > tr:gt(100)", list);
+							
+							rows.each(function()
+							{
+								var id = $("td", this).attr("class").replace("id", '');
+								delete list[0].list[id];
+							});
+							
+							rows.remove();
+							
+							$(lists).hide();
+							
+							
+							list.show();
+						}
+					}, "json");
+				};
+				
+				if($.browser.mozilla)
+					$("#search .box").bind("keyup", function(e)
+					{
+						if(e.keyCode === 13)
+							$("#search > form").submit();
+					});
+				
+				var resetList = function(list)
+				{
+					$(lists).hide();
+					$("tbody > tr", $(list)[0]).remove();
+					list.show();
+				};
+				
+				var submitSearch = function()
+				{
+					resetList(activeList);
+					
+					lastSearch = $("#search .box").val();
+					
+					updatedSince = 30 * 60;
+					
+					chooseOption($("#lists .dropdown-menu [rel='" + $("#search-results").attr("id") + "']"));
+					
+					update($("#search-results"), '%' + lastSearch + '%');
+					
+					return false;
+				};
+				
+				$("#search .button").bind("click", submitSearch);
+				
+				$("#realms .button").bind("click", function()
+				{
+					$("#realms-list").css({top: $("#realms").offset().top + $("#realms").height() + 5, left: $("#realms").css("left")});
+					$("#realms").addClass("active");
+					$("#realms-list").show();
+					$("#blocker").show();
+				});
+				
+				//$("#loading").css("opacity", 0);
+				
+				$("#loading").ajaxStart(function(){
+					//$(this).stop().animate({opacity: 1}, 250);
+					$(this).show();
+				});
+
+				$("#loading").ajaxComplete(function(){
+					//$(this).stop().animate({opacity: 0}, 250);
+					$(this).hide();
+				});
+				
+				$("#option-expansion").bind("click", function()
+				{
+					resetList(activeList);
+					if(gameExpansion === 0)
+					{
+						gameExpansion = 2;
+						$(this).css("background-image", "url(images/button-expansion.gif)");
+					}
+					else if(gameExpansion === 1)
+					{
+						gameExpansion = 1;
+						$(this).css("background-image", "url(images/button-classic.gif)");
+					}
+				});
+				
+				$("#option-hardcore").bind("click", function()
+				{
+					resetList(activeList);
+					if(gameHardcore === 0)
+					{
+						gameHardcore = 1;
+						$(this).css("background-image", "url(images/button-hardcore.gif)");
+					}
+					else if(gameHardcore === 1)
+					{
+						gameHardcore = 0;
+						$(this).css("background-image", "url(images/button-softcore.gif)");
+					}
+				});
+
+				$("#option-ladder").bind("click", function()
+				{
+					resetList(activeList);
+					if(gameLadder === 0)
+					{
+						gameLadder = 1;
+						$(this).css("background-image", "url(images/button-ladder.gif)");
+					}
+					else if(gameLadder === 1)
+					{
+						gameLadder = 0;
+						$(this).css("background-image", "url(images/button-nonladder.gif)");
+					}
+				});
+				
+				$("#option-difficulty").bind("click", function()
+				{
+					resetList(activeList);
+					if(gameDifficulty === 1)
+					{
+						gameDifficulty = 2;
+						$(this).css("background-image", "url(images/button-nightmare.gif)");
+					}
+					else if(gameDifficulty === 2)
+					{
+						gameDifficulty = 3;
+						$(this).css("background-image", "url(images/button-hell.gif)");
+					}
+					else if(gameDifficulty === 3)
+					{
+						gameDifficulty = 1;
+						$(this).css("background-image", "url(images/button-normal.gif)");
+					}
+				});
+
+				
+
+				
+				var chooseOption = function(option)
+				{
+					$("#lists .handle").css("background", option.css("background"));
+					$("#lists .dropdown-menu").hide();
+					
+					$(lists).hide();
+					
+					activeList = $("#" + option.attr("rel"));
+					activeList.show();
+				};
+				
+				
+				
+				$("#lists .dropdown-menu .option").bind("click", function()
+				{
+					chooseOption($(this));
+				});
+				
+				$("#search > form").submit(submitSearch);
+				
+				var realmOptions = $("#realms-list .option").get();
+				//realmOptions.push();
+				
+				var realmOption = realmOptions[0];
+				
+				$("#realms-list .option")
+				.bind("click", function()
+				{
+					realmOption = this;
+					$(realmOptions).removeClass("active");
+					$(this).toggleClass("active");
+				})
+				.bind("dblclick", function()
+				{
+					realmOption = this;
+					$(realmOptions).removeClass("active");
+					$(this).toggleClass("active");
+					
+					activateRealm();
+				})
+				.bind("mousedown", clickSelect);
+				
+				var activeListHandler = function()
+				{
+					if(activeList.is(":visible"))
+					{
+						if(activeList.is("#public-games"))
+							update(activeList, '%');
+						else if(activeList.is("#search-results"))
+							update(activeList, '%' + lastSearch + '%');
+					}
+				};
+				
+				
+				var activateRealm = function()
+				{
+					resetList(activeList);
+				
+					realmID = $("#realms-list .option").index(realmOption) + 1;
+					$("#realms .activeRealm").css("background", "transparent url(images/realm-" + realmID + ".gif) no-repeat 0% 0%");
+					$("#realms").removeClass("active");
+					$("#realms-list").hide();
+					$("#blocker").hide();
+					
+					updatedSince = 30 * 60;
+					
+					//activeList[0].lastUpdated = 0;
+					activeListHandler();
+				};
+				
+				$("#realms-list .ok").bind("click", activateRealm);
+				
+				$("#realms-list .cancel").bind("click", function()
+				{
+					$("#realms").removeClass("active");
+					$("#realms-list").hide();
+					$("#blocker").hide();
+				});
+				
+				
+				
+				$("#error .ok").bind("click", function()
+				{
+					$("#error").hide();
+					$("#blocker").hide();
+				});
+				
+				var togglers = $(".toggler");
+				var togglees = $(".togglee");
+				
+				togglers.bind("click", function()
+				{
+					var toggle = $("#" + $(this).attr("rel"));
+					
+					if(toggle.is(":visible"))
+					{
+						togglees.hide();
+						toggle.hide();
+						$("#togglee-default").show();
+					}
+					else
+					{
+						togglees.hide();
+						toggle.show();
+					}
+				});
+				
+				initModules();
+				
+				chooseOption($("#lists .dropdown-menu [rel='" + activeList.attr("id") + "']"));
+				
+				$(window).load(function()
+				{
+					activateRealm();
+					
+					//update(activeList, '%');
+					
+					setInterval(function() { updatedSince = 10; activeListHandler(); }, 3500);
+				});
+
+			});
+		</script>
+	</head>
+	<body>
+		<div id="background"></div>
+	
+		<div id="hardcore"></div>
+	
+		<div id="ladder"></div>
+	
+		<div id="realms" style='display: none; margin:10px;width: 182px; height: 99px; position: absolute; '>
+			<div class="handle" style="position: absolute; top: 2px; left: 20px; width: 145px; height: 19px;">
+			</div>
+			<div class="activeRealm" style="position: absolute; top: 37px; left: 15px; width: 151px; height: 17px;">
+			</div>
+			<div class="button" style='position: absolute; top: 72px; left: 12px; width: 145px; height: 13px; padding:5px;'>
+			</div>
+		</div>
+	
+		<div id="error" style='display:none;z-index:101;width:;height:;position:absolute;left:0px;top:0px;background: transparent url("images/message-box.gif") no-repeat 0% 0%'>
+		</div>
+	
+		<div id="blocker" style='display:none;background-color:#000;z-index:100;width:100%;height:100%;position:absolute;left:0px;top:0px;'>
+		</div>
+	
+		<div id="realms-list" style='display:none;z-index:101;top: 105px; margin:10px;width: 182px; height: 199px; position: absolute; background: transparent url("images/realms-chooser.gif") no-repeat 0% 0%'>
+			<div class="list" style='position: absolute; top: 2px; left: 2px; width: 178px; height: 158px;padding-top:1px;'>
+				<div style="padding: 2px 1px 1px 1px">
+					<div class='option'>U.S. West</div>
+					<div class='option'>U.S. East</div>
+					<div class='option'>Europe</div>
+					<div class='option'>Asia</div>
+					<div class='option'>Asia 2</div>
+					<div class='option'>Asia 3</div>
+				</div>
+			</div>
+		
+			<div class="ok" style='position: absolute; top: 169px; left: 0px; width: 89px; height: 30px;'>
+			</div>
+		
+			<div class="cancel" style='position: absolute; top: 169px; left: 89px; width: 89px; height: 30px;'>
+			</div>
+		</div>
+	
+		<div id="search" style='display: none;margin:10px;width: 182px; height: 26px; position: absolute; background: transparent url("images/search.gif") no-repeat 0% 0%'>
+			<form action="" method="post">
+				<input class="box" type="text" name="key" size="40" maxlength="25" />
+				<input class="button" type="submit" name="submit" value="" style='position: absolute; background-color: transparent; top: 2px; right: 2px; width: 64px; height: 21px; padding:0pt;' />
+			</form>
+
+		</div>
+	
+		<div id="lists" style='display: none;z-index:50;margin:10px;width: 182px; height: 267px; position: absolute; background: transparent url("images/lists.gif") no-repeat 0% 0%'>
+			<div class="handle" style="position: absolute; top: 2px; left: 2px; width: 178px; height: 19px;">
+			</div>
+			<div class="dropdown" style='position: absolute; top: 5px; right: 5px; width: 15px; height: 13px; background: transparent url("images/dropdown.gif") no-repeat 0% 0%'>
+			</div>
+			<div class="dropdown-menu" style='display:none;position: absolute; top: 21px; left: 0pt; width: 182px; z-index: 5; background: transparent url("images/dropdown-menu.gif") no-repeat 0% 100%'>
+				<div style='padding:2px'>
+					<div class='option' rel='public-games' style='width:143px;height:19px;background: transparent url("images/menu-games.gif") no-repeat 0% 100%'>
+					</div>
+					<div class='option' rel='search-filter' style='width:143px;height:19px;background: transparent url("images/menu-search.gif") no-repeat 0% 100%'>
+					</div>
+					<div class='option' rel='search-results' style='width:143px;height:19px;background: transparent url("images/menu-results.gif") no-repeat 0% 100%'>
+					</div>
+					<div class='option' rel='options' style='width:143px;height:19px;background: transparent url("images/menu-options.gif") no-repeat 0% 100%'>
+					</div>
+				</div>
+			</div>
+		
+			<div id="search-filter" style='display: none; position: absolute; top: 23px; left: 2px; width: 178px; height: 242px; overflow-y: scroll;overflow-x:hidden;'>
+				<div style='padding: 7px'>
+					<strong>Under Development</strong>
+				</div>
+			</div>
+		
+			<div id="loading" style='display:none;position: absolute; bottom: 10px; right: 28px; width: 16px; height: 16px;background: transparent url("images/loading.gif") no-repeat 0% 0%'>
+			
+			</div>
+		
+			<div id="public-games" style='display: none; position: absolute; top: 23px; left: 2px; width: 178px; height: 242px; overflow-y: scroll;overflow-x:hidden;'>
+				<div style='padding: 7px 0pt 7px 0pt'> 
+					<table cellspacing="0" cellpadding="0">
+						<thead>
+							<th class="message"></th>
+						</thead>
+						<tbody>
+							
+						</tbody>
+						<tfoot>
+							<th></th>
+						</tfoot>
+					</table>
+				</div>
+			</div>
+		
+			<div id="search-results" style='display: none; position: absolute; top: 23px; left: 2px; width: 178px; height: 242px; overflow-y: scroll;overflow-x:hidden;'>
+				<div style='padding: 7px 0pt 7px 0pt'>
+					<table cellspacing="0" cellpadding="0">
+						<thead>
+							<th></th>
+						</thead>
+						<tbody>
+							
+						</tbody>
+						<tfoot>
+							<th></th>
+						</tfoot>
+					</table>
+				</div>
+			</div>
+		
+			<div id="options" style='display: none; position: absolute; top: 23px; left: 2px; width: 178px; height: 242px; overflow-y: scroll;overflow-x:hidden;'>
+				<div style='padding: 7px'>
+					<strong>Under Development</strong>
+				</div>
+			</div>
+		
+		</div>
+		
+		<div id="option-expansion" style='margin:10px;width: 182px; height: 35px; position: absolute; top:114px; left: 0px;background: transparent url(images/button-expansion.gif) no-repeat 0% 0%'>
+		</div>
+		
+		<div id="option-hardcore" style='margin:10px;width: 182px; height: 35px; position: absolute; top:164px; left: 0px;background: transparent url(images/button-softcore.gif) no-repeat 0% 0%'>
+		</div>
+		
+		<div id="option-ladder" style='margin:10px;width: 182px; height: 35px; position: absolute; top:214px; left: 0px;background: transparent url(images/button-ladder.gif) no-repeat 0% 0%'> 
+		</div>
+		
+		<div id="option-difficulty" style='margin:10px;width: 182px; height: 35px; position: absolute; top:263px; left: 0px;background: transparent url(images/button-normal.gif) no-repeat 0% 0%'>
+		</div>
+		
+		<div id='template_game-details' class='game-details' style='display:none;overflow:hidden;margin:10px;width: 504px; height: 83px; position: absolute; bottom:50px; left: 400px;background: transparent url(images/game-details.gif) no-repeat 0% 0%'> 
+			<div class='handle' style='position: absolute; top: 2px; left: 2px; width: 155px; height: 19px;'> 
+			</div>
+		
+			<div class='title' style='position: absolute; top: 4px; left: 2px; width: 151px; padding:2px;color:#FFF'>
+				<div class='handle' style='width:100%'></div>
+				<input class='box' type='text' maxlength='25' style='display:none;width:100%;' />
+			</div>
+		
+			<div class='description' style='position: absolute; top: 26px; left: 2px; width: 339px; height: 55px;'>
+			</div>
+		
+			<div style='position: absolute; top: 2px; left: 343px; width: 159px; height: 79px; overflow-y: scroll;overflow-x:hidden;'>
+				<div class="players" style='padding: 7px 0pt 7px 0pt'>
+				</div>
+			</div>
+		
+			<div class='copy' style='position: absolute; top: 0px; left: 161px; width: 60px; height: 24px;'>
+			</div>
+		
+			<div class='hide' style='position: absolute; top: 0px; left: 221px; width: 60px; height: 24px;'>
+			</div>
+		
+			<div class='close' style='position: absolute; top: 0px; left: 281px; width: 60px; height: 24px;'>
+			</div>
+		</div>
+		
+		<div id="chat" style="position:absolute;top:0;left:0;margin:10px;">
+			<div style='padding-top:2px;background: transparent url(images/border-t.gif) repeat-x 0% 0%'>
+				<div style='padding-bottom:2px;background: transparent url(images/border-b.gif) repeat-x 0% 100%'>
+					<div style='padding-left:2px;background: transparent url(images/border-l.gif) repeat-y 0% 0%'>
+						<div style='padding-right:2px;background: transparent url(images/border-r.gif) repeat-y 100% 0%'>
+							<div id="yshout" style='width:100%'></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div id="content" style='position: absolute; margin:10px; bottom: 45px; right: 0px; '>
+			<div style='padding-top:2px;background: transparent url(images/border-t.gif) no-repeat 0% 0%'>
+				<div style='padding-bottom:2px;background: transparent url(images/border-b.gif) no-repeat 0% 100%'>
+					<div style='padding-left:2px;background: transparent url(images/border-l.gif) no-repeat 0% 0%'>
+						<div style='padding-right:2px;background: transparent url(images/border-r.gif) no-repeat 100% 0%'>
+							<div style='width:754px; height: 225px;background-color:#000;overflow:auto'>
+			<div class="togglee" id="togglee-default" style='padding:5px;'>
+				<span class="title">Welcome to the Diablo 2 Game Database!</span>
+				<br /><br />
+				We've enabled these lists so far: <span class="color1">D2 LoD USWSCL Normal</span>. <strong>No other lists are enabled yet!</strong>
+				<br /><br />
+				If you have any questions, requests, bug reports, or anything feel free to contact us by email.
+				<br /><br /><br />
+				<span class="title">Changelog</span>
+				<br />
+				<span class="color1 bold">&lt;2010-03-01&gt;</span> Back again. One active list: D2 LoD USWSCL Normal.
+				<br />
+				<span class="color1 bold">&lt;2008-09-21&gt;</span> Activated list: D2 LoD EUSCL Hell.
+				<br />
+				<span class="color1 bold">&lt;2008-09-20&gt;</span> Activated list: D2 LoD USESCL Hell.
+				<br />
+				<span class="color1 bold">&lt;2008-09-19&gt;</span> Activated lists: D2 LoD USWSCL Hell, and D2 LoD USESCL Normal.
+				<br /><br />
+				<span class="title">Todo</span>
+				<br />
+				<span class="color1 bold">&lt;2008-09-19&gt;</span> Add game information (player list, game created, game last seen).
+				<br />
+				<span class="color1 bold">&lt;2008-09-19&gt;</span> Add search filter (player name, game created, game last seen).
+				<br />
+				<span class="color1 bold">&lt;2008-09-19&gt;</span> Implement cookies.
+				<br />
+				<span class="color1 bold">&lt;2008-09-19&gt;</span> Fixup UI.
+				<br />
+				<span class="color1 bold">&lt;2008-09-19&gt;</span> Extend browser compatibility.
+			</div>
+
+			<div class="togglee" id="about" style='display:none;padding:5px;'>
+				<span class="title">About</span>
+				<br />
+				Initial game list and search list are up to 30 minutes old. Active game lists are updated every 5-10 seconds. Data may not necessilary be up-to-date. Considering the delay, games may be full by the time they appear in the list. Games are not removed upon becoming full, or do not exist anymore. This is in order to allow searching history.
+				<br />
+				<br />
+				There is a total of 144 lists. Therefore, lists are actived based on demand. So far 4 lists are activated: D2 LoD USWSCL Hell, D2 LoD USESCL Normal, D2 LoD USESCL Hell, and D2 LoD EUSCL Hell. If you feel a list should be activated, please contact us.
+				<br />
+				<br />
+				<span class="color1 bold">&lt;<a href="mailto:eric.muyser@gmail.com">Eric Muyser</a>&gt;</span> Friends got me playing Diablo II again, and this is the first thing that came to mind. I thought it was a good idea and should have been around a long time ago.
+				<br />
+				<br />
+				<span class="title">Special Thanks</span>
+				<br />
+			</div>
+			
+			<div class="togglee" id="contact" style='display:none;padding:5px;'>
+				<span class="title">Contact</span>
+				<br />
+				Feel free to contact one of the team members via email.
+				<br />
+				<br />
+				Note: We may be allowing certain websites to use our database. Otherwise, grab the source and host your own.
+				<br />
+				<br />
+				<span class="title">Team</span>
+				<br />
+				> <a href="mailto:eric.muyser@gmail.com">Eric Muyser</a>
+				<br />
+			</div>
+			
+			<div class="togglee" id="donate" style='display:none;padding:5px;'>
+				<span class="title">Donate</span>
+				<br />
+				<br />
+				Donations are very much greatly appreciated. <img src="/chat/smileys/smile.gif" />
+				<br />
+				<br />
+				<center>
+					<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+						<input type="hidden" name="cmd" value="_xclick" />
+						<input type="hidden" name="notify_url" value="http://bnetdb.com/" />
+						<input type="hidden" name="return" value="http://bnetdb.com/" />
+						<input type="hidden" name="cancel_return" value="http://bnetdb.com/" />
+						<input type="hidden" name="item_name" value="Donation">
+						<input type="hidden" name="item_number" value="donation" />
+						<input type="hidden" name="business" value="eric.muyser@gmail.com" />
+						<span class="currency_symbol" style="font-size: 1.3em">$</span>&nbsp;
+						<input type="text" name="amount" size="5" style='padding-left:3px;' />
+						<select class="currency_code" onchange="ChangeCurrency()" name="currency_code" style="width: 75px">
+							<option value="USD" selected="selected">USD</option>
+							<option value="CAD">CAD</option>
+							<option value="GBP">GBP</option>
+							<option value="AUD">AUD</option>
+							<option value="JPY">JPY</option>
+							<option value="EUR">EUR</option>
+						</select>
+						<input type="image" name="submit" alt="Make payments with PayPal - it's fast, free and secure!" src="http://www.paypal.com/images/x-click-but7.gif" />
+					</form>
+					<script type="text/javascript">
+						var ChangeCurrency = function()
+						{
+							var sObj = $("form .currency_code");
+							var s = sObj.val();
+							var cObj = $("form .currency_symbol");
+							
+							if(cObj.length > 0)
+							{
+								var cSymbols = {'CAD': '$', 'USD': '$', 'GBP': '&pound;', 'AUD': '$', 'JPY': '&yen;', 'EUR': '&euro;'};
+								var cSymbol = cSymbols[s];
+								cObj.html(cSymbol);
+							}
+						};
+					</script>
+				</center>
+				<br />
+				<br />
+				<span class="title">Top Donators</span>
+				<br />
+			</div>
+			
+			<div class="togglee" id="copyrights" style='display:none;padding:5px;'>
+				<span class="title">Copyrights</span>
+				<br />
+				<br />
+				�2001 Blizzard Entertainment, Inc. All rights reserved. Lord of Destruction is a trademark and Diablo and Blizzard Entertainment are trademarks or registered trademarks of Blizzard Entertainment, Inc. in the U.S. and/or other countries.
+				<br /><br />
+				All images and Diablo II related content are protected by copyright law and are registered by Blizzard Entertainment, Inc.
+				<br /><br />
+				This website is in no way related to Diablo II, Battle.net, Blizzard Entertainment, Inc. or any of its associates and partners.
+				<br />
+			</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="toggler" rel="copyrights" style='margin:10px;width: 182px; height: 35px; position: absolute; bottom:0px; right: 0px;background: transparent url(images/button-copyrights.gif) no-repeat 0% 0%'>
+		</div>
+		<div class="toggler" rel="donate" style='margin:10px;width: 182px; height: 35px; position: absolute; bottom:0px; right: 192px;background: transparent url(images/button-donate.gif) no-repeat 0% 0%'>
+		</div>
+		<div class="toggler" rel="contact" style='margin:10px;width: 182px; height: 35px; position: absolute; bottom:0px; right: 384px;background: transparent url(images/button-contact.gif) no-repeat 0% 0%'>
+		</div>
+		<div class="toggler" rel="about" style='margin:10px;width: 182px; height: 35px; position: absolute; bottom:0px; right: 576px;background: transparent url(images/button-about.gif) no-repeat 0% 0%'>
+		</div>
+		
+		<div id="upgrade" style='display:none'>
+			
+		</div>
+	</body>
+</html>
